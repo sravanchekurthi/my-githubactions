@@ -5,11 +5,9 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
-  workflow_dispatch:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build-java:
@@ -30,3 +28,11 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build
+
+    - name: Build and Push Docker Image
+      uses: mr-smithers-excellent/docker-build-push@v4
+      with:
+        image: sr9290/schekurthi
+        registry: docker.io
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
